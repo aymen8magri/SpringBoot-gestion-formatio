@@ -9,5 +9,7 @@ public class GestionFormationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GestionFormationApplication.class, args);
 	}
-
+	public void run(String... args) throws Exception {
+		System.out.println("Gestion Formation");
+	}
 }
