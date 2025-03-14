@@ -2,6 +2,8 @@ package com.formation.gestion_formation.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Formateur {
     @Id
@@ -14,4 +16,8 @@ public class Formateur {
     private int experience;
     @Lob
     private String photo;
+
+    //relation entre formateur et formation
+    @OneToMany(mappedBy = "formateur")
+    private List<Formation> formations;
 }

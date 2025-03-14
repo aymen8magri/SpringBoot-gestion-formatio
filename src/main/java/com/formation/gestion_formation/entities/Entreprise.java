@@ -10,7 +10,6 @@ public class Entreprise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nom;
-    private String adresse;
     private String email;
     private String telephone;
     @Lob
@@ -19,4 +18,9 @@ public class Entreprise {
     //relation entre entreprise et formation
     @OneToMany(mappedBy = "entreprise")
     private List<Formation> formations;
+
+    //relation entre entreprise et adresse
+    @OneToOne
+    @JoinColumn(name = "adresse_id")
+    private Adresse adresse;
 }
