@@ -16,5 +16,15 @@ public class Adresse {
     @OneToOne(mappedBy = "adresse")
     private Entreprise entreprise;
 
+    public Adresse() {
+    }
+
+    public Adresse(String rue, String ville, String codePostal, String pays) {
+        this.rue = rue;
+        this.ville = ville;
+        this.codePostal = codePostal;
+        this.pays = pays;
+    }
+
 }
 

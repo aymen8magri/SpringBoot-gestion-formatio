@@ -17,7 +17,7 @@ public class Formation {
     private int duree;
     private double prix;
     @Lob
-    private String image;
+    private byte[] image;
 
     //relation entre formation et formateur
     @ManyToOne
@@ -34,6 +34,20 @@ public class Formation {
     private List<FormationStagiaire> inscriptions;
 
 
+    public Formation(String string, String string2, LocalDate localDate, LocalDate localDate2, int i, double d, Object object, Formateur form1, Entreprise ent1) {
+    }
+
+    public Formation(String titre, String description, LocalDate dateDebut, LocalDate dateFin, int duree, double prix, byte[] image, Formateur formateur, Entreprise entreprise) {
+        this.titre = titre;
+        this.description = description;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.duree = duree;
+        this.prix = prix;
+        this.image = image;
+        this.formateur = formateur;
+        this.entreprise = entreprise;
+    }
 
     // les getters and setters
 
@@ -85,11 +99,11 @@ public class Formation {
         this.prix = prix;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

@@ -16,12 +16,24 @@ public class Stagiaire {
     private String telephone;
     private LocalDate dateNaissance;
     @Lob
-    private String photo;
+    private byte[] photo;
 
     //relation entre stagiaires et formationStagiaire
     @OneToMany(mappedBy = "stagiaire")
     private List<FormationStagiaire> inscriptions;
 
+    public Stagiaire() {
+    }
+
+    public Stagiaire(String nom, String prenom, String email, String telephone, LocalDate dateNaissance, byte[] photo) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.telephone = telephone;
+        this.dateNaissance = dateNaissance;
+        this.photo = photo;
+    }
+    
     //les getters and setters
     public String getNom() {
         return nom;
@@ -63,11 +75,11 @@ public class Stagiaire {
         this.dateNaissance = dateNaissance;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

@@ -7,12 +7,14 @@ import com.formation.gestion_formation.repositories.FormationRepository;
 import com.formation.gestion_formation.repositories.FormationStagiaireRepository;
 import com.formation.gestion_formation.repositories.StagiaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Lazy
 public class FormationStagiaireServiceImpl implements IFormationStagiaireService {
     @Autowired
     private FormationStagiaireRepository formationStagiaireRepository;
@@ -21,6 +23,7 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
     @Autowired
     private StagiaireRepository stagiaireRepository;
 
+    // Inscription d'un stagiaire à une formation
     @Override
     public FormationStagiaire inscrireStagiaire(Long formationId, Long stagiaireId) {
         Formation formation = formationRepository.findById(formationId)
@@ -38,6 +41,7 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
         return formationStagiaireRepository.save(inscription);
     }
 
+    // Modification de l'inscription d'un stagiaire à une formation
     @Override
     public FormationStagiaire modifierInscription(Long id, boolean paiementEffectue) {
         return formationStagiaireRepository.findById(id)
@@ -48,17 +52,20 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
                 .orElseThrow(() -> new RuntimeException("Inscription non trouvée avec ID : " + id));
     }
 
+    // Suppression de l'inscription d'un stagiaire à une formation
     @Override
     public void supprimerInscription(Long id) {
         formationStagiaireRepository.deleteById(id);
     }
 
+    // Consultation de l'inscription d'un stagiaire à une formation
     @Override
     public FormationStagiaire consulterInscription(Long id) {
         return formationStagiaireRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inscription non trouvée avec ID : " + id));
     }
 
+    // Liste des inscriptions des stagiaires aux formations
     @Override
     public List<FormationStagiaire> listerInscriptions() {
         return formationStagiaireRepository.findAll();

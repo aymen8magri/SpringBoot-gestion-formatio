@@ -13,7 +13,7 @@ public class Entreprise {
     private String email;
     private String telephone;
     @Lob
-    private String logo;
+    private byte[] logo;
 
     //relation entre entreprise et formation
     @OneToMany(mappedBy = "entreprise")
@@ -23,4 +23,15 @@ public class Entreprise {
     @OneToOne
     @JoinColumn(name = "adresse_id")
     private Adresse adresse;
+
+    public Entreprise() {
+    }
+
+    public Entreprise(String nom, String email, String telephone, byte[] logo, Adresse adresse) {
+        this.nom = nom;
+        this.email = email;
+        this.telephone = telephone;
+        this.logo = logo;
+        this.adresse = adresse;
+    }
 }

@@ -12,11 +12,13 @@ public class StagiaireServiceImpl implements IStagiaireService {
     @Autowired
     private StagiaireRepository stagiaireRepository;
 
+    // Ajout des stagiaires dans la base de données
     @Override
     public Stagiaire ajouterStagiaire(Stagiaire stagiaire) {
         return stagiaireRepository.save(stagiaire);
     }
 
+    // Modification des stagiaires dans la base de données
     @Override
     public Stagiaire modifierStagiaire(Long id, Stagiaire stagiaire) {
         return stagiaireRepository.findById(id)
@@ -32,12 +34,13 @@ public class StagiaireServiceImpl implements IStagiaireService {
                 .orElseThrow(() -> new RuntimeException("Stagiaire avec ID " + id + " non trouvé"));
     }
 
-
+    // Suppression des stagiaires dans la base de données
     @Override
     public void supprimerStagiaire(Long id) {
         stagiaireRepository.deleteById(id);
     }
 
+    // Consultation des stagiaires dans la base de données
     @Override
     public Stagiaire consulterStagiaire(Long id) {
         return stagiaireRepository.findById(id)
@@ -45,6 +48,7 @@ public class StagiaireServiceImpl implements IStagiaireService {
 
     }
 
+    // Liste des stagiaires dans la base de données
     @Override
     public List<Stagiaire> listerStagiaires() {
         return stagiaireRepository.findAll();

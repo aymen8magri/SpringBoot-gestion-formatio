@@ -12,11 +12,13 @@ public class FormationServiceImpl implements IFormationService {
     @Autowired
     private FormationRepository formationRepository;
 
+    // Ajout des formations dans la base de données
     @Override
     public Formation ajouterFormation(Formation formation) {
         return formationRepository.save(formation);
     }
 
+    // Modification des formations dans la base de données
     @Override
     public Formation modifierFormation(Long id, Formation formation) {
         return formationRepository.findById(id).map(formation1 -> {
@@ -35,17 +37,20 @@ public class FormationServiceImpl implements IFormationService {
 
     }
 
+    // Suppression des formations dans la base de données
     @Override
     public void supprimerFormation(Long id) {
         formationRepository.deleteById(id);
     }
 
+    // Consultation des formations dans la base de données
     @Override
     public Formation consulterFormation(Long id) {
         return formationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Formation non trouvée"));
     }
 
+    // Liste des formations dans la base de données
     @Override
     public List<Formation> listerFormations() {
         return formationRepository.findAll();

@@ -22,6 +22,16 @@ public class FormationStagiaire {
     @JoinColumn(name = "stagiaire_id")
     private Stagiaire stagiaire;
 
+    public FormationStagiaire() {
+    }
+
+    public FormationStagiaire(LocalDate dateInscription, boolean paiementEffectue, Formation formation, Stagiaire stagiaire) {
+        this.dateInscription = dateInscription;
+        this.paiementEffectue = paiementEffectue;
+        this.formation = formation;
+        this.stagiaire = stagiaire;
+    }
+
     //les getters and setters
     public LocalDate getDateInscription() {
         return dateInscription;
