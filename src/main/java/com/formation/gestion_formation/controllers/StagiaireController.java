@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.formation.gestion_formation.entities.Stagiaire;
-import com.formation.gestion_formation.services.IStagiaireService;
+import com.formation.gestion_formation.services.StagiaireService;
 
 @RestController
 public class StagiaireController {
     @Autowired
-    private IStagiaireService stagiaireService;
+    private StagiaireService stagiaireService;
 
     // Ajout d'un stagiaire
     @PostMapping("/addStagiaire")

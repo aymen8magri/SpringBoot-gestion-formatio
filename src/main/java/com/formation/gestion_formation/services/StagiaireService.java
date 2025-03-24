@@ -4,7 +4,7 @@ import com.formation.gestion_formation.entities.Stagiaire;
 
 import java.util.List;
 
-public interface IStagiaireService {
+public interface StagiaireService {
     // Ajout des stagiaires dans la base de données
     Stagiaire ajouterStagiaire(Stagiaire stagiaire);
 

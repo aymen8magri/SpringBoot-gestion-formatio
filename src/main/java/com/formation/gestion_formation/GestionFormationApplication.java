@@ -76,4 +76,23 @@ public class GestionFormationApplication {
             System.out.println("Insertion terminée !");
         };
     }
+
+//     @Bean
+// CommandLineRunner clearDatabase(AdresseRepository adresseRepository,
+//                                 EntrepriseRepository entrepriseRepository,
+//                                 FormateurRepository formateurRepository,
+//                                 FormationRepository formationRepository,
+//                                 StagiaireRepository stagiaireRepository,
+//                                 FormationStagiaireRepository inscriptionRepository) {
+//     return args -> {
+//         inscriptionRepository.deleteAll();
+//         formationRepository.deleteAll();
+//         formateurRepository.deleteAll();
+//         entrepriseRepository.deleteAll();
+//         adresseRepository.deleteAll();
+//         stagiaireRepository.deleteAll();
+
+//         System.out.println("Base de données vidée !");
+//     };
+// }
 }
