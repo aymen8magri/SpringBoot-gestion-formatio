@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Formateur {
     @Id
@@ -15,27 +17,35 @@ public class Formateur {
     private String telephone;
     private String specialite;
     private int experience;
-    @Lob
-    private byte[] photo;
-
+    private String photoUrl = "uploads/formateur.png";
+    
     //relation entre formateur et formation
+    @JsonIgnore 
     @OneToMany(mappedBy = "formateur")
     private List<Formation> formations;
 
     public Formateur() {
     }
 
-    public Formateur(String nom, String prenom, String email, String telephone, String specialite, int experience, byte[] photo) {
+    public Formateur(String nom, String prenom, String email, String telephone, String specialite, int experience, String photoUrl) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.telephone = telephone;
         this.specialite = specialite;
         this.experience = experience;
-        this.photo = photo;
+        this.photoUrl = photoUrl;
     }
 
     //getter and setter
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public String getNom() {
         return nom;
     }
@@ -54,8 +64,8 @@ public class Formateur {
     public int getExperience() {
         return experience;
     }
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
     public List<Formation> getFormations() {
         return formations;
@@ -78,8 +88,8 @@ public class Formateur {
     public void setExperience(int experience) {
         this.experience = experience;
     }
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
     public void setFormations(List<Formation> formations) {
         this.formations = formations;

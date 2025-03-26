@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
 public class FormationStagiaire {
     @Id
@@ -18,6 +21,7 @@ public class FormationStagiaire {
     private Formation formation;
 
     //relation entre formationStragiaire et stagiaire
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "stagiaire_id")
     private Stagiaire stagiaire;
@@ -33,6 +37,12 @@ public class FormationStagiaire {
     }
 
     //les getters and setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public LocalDate getDateInscription() {
         return dateInscription;
     }

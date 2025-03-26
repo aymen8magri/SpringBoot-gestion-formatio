@@ -3,8 +3,11 @@ package com.formation.gestion_formation.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.formation.gestion_formation.entities.FormationStagiaire;
@@ -22,25 +25,25 @@ public class FormationStagiaireController {
     }
 
     // Modification de l'inscription d'un stagiaire à une formation
-    @PostMapping("/modifierInscription/{id}/{paiementEffectue}")
+    @PutMapping("/modifierInscription/{id}/{paiementEffectue}")
     public FormationStagiaire modifierInscription(@PathVariable Long id, @PathVariable boolean paiementEffectue) {
         return formationStagiaireService.modifierInscription(id, paiementEffectue);
     }
 
     // Suppression de l'inscription d'un stagiaire à une formation
-    @PostMapping("/supprimerInscription/{id}")
+    @DeleteMapping("/supprimerInscription/{id}")
     public void supprimerInscription(@PathVariable Long id) {
         formationStagiaireService.supprimerInscription(id);
     }
 
     // Consulter une inscription par ID
-    @PostMapping("/consulterInscription/{id}")
+    @GetMapping("/consulterInscription/{id}")
     public FormationStagiaire consulterInscription(@PathVariable Long id) {
         return formationStagiaireService.consulterInscription(id);
     }
 
     // Lister toutes les inscriptions
-    @PostMapping("/listerInscriptions")
+    @GetMapping("/listerInscriptions")
     public List<FormationStagiaire> listerInscriptions() {
         return formationStagiaireService.listerInscriptions();
     }

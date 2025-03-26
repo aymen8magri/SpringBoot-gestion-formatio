@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Formation {
     @Id
@@ -14,15 +16,16 @@ public class Formation {
     private String description;
     private LocalDate dateDebut;
     private LocalDate dateFin;
+    private int nbrePlace;
     private int duree;
     private double prix;
-    @Lob
-    private byte[] image;
+    private String imageUrl = "uploads/formation.png";
 
     //relation entre formation et formateur
     @ManyToOne
     @JoinColumn(name = "formateur_id")
     private Formateur formateur;
+
 
     //relation entre formation et entreprise
     @ManyToOne
@@ -30,26 +33,34 @@ public class Formation {
     private Entreprise entreprise;
 
     //relation entre formation et formationStagiaire
+    @JsonIgnore
     @OneToMany(mappedBy = "formation")
     private List<FormationStagiaire> inscriptions;
 
 
-    public Formation(String string, String string2, LocalDate localDate, LocalDate localDate2, int i, double d, Object object, Formateur form1, Entreprise ent1) {
+    public Formation() {
     }
 
-    public Formation(String titre, String description, LocalDate dateDebut, LocalDate dateFin, int duree, double prix, byte[] image, Formateur formateur, Entreprise entreprise) {
+    public Formation(String titre, String description, LocalDate dateDebut, LocalDate dateFin,int nbrePlace, int duree, double prix, String imageUrl, Formateur formateur, Entreprise entreprise) {
         this.titre = titre;
         this.description = description;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
+        this.nbrePlace = nbrePlace;
         this.duree = duree;
         this.prix = prix;
-        this.image = image;
+        this.imageUrl = imageUrl;
         this.formateur = formateur;
         this.entreprise = entreprise;
     }
 
     // les getters and setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitre() {
         return titre;
@@ -61,6 +72,14 @@ public class Formation {
 
     public LocalDate getDateDebut() {
         return dateDebut;
+    }
+
+    public int getNbrePlace() {
+        return nbrePlace;
+    }
+
+    public void setNbrePlace(int nbrePlace) {
+        this.nbrePlace = nbrePlace;
     }
 
     public void setDateDebut(LocalDate dateDebut) {
@@ -99,12 +118,12 @@ public class Formation {
         this.prix = prix;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Formateur getFormateur() {

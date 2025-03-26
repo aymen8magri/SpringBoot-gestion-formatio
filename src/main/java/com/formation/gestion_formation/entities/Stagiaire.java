@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Entity
 public class Stagiaire {
     @Id
@@ -15,26 +16,32 @@ public class Stagiaire {
     private String email;
     private String telephone;
     private LocalDate dateNaissance;
-    @Lob
-    private byte[] photo;
+    private String photoUrl = "uploads/stagiaire.png";
+
 
     //relation entre stagiaires et formationStagiaire
-    @OneToMany(mappedBy = "stagiaire")
+    @OneToMany(mappedBy = "stagiaire", cascade = CascadeType.REMOVE)
     private List<FormationStagiaire> inscriptions;
 
     public Stagiaire() {
     }
 
-    public Stagiaire(String nom, String prenom, String email, String telephone, LocalDate dateNaissance, byte[] photo) {
+    public Stagiaire(String nom, String prenom, String email, String telephone, LocalDate dateNaissance, String photoUrl) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.telephone = telephone;
         this.dateNaissance = dateNaissance;
-        this.photo = photo;
+        this.photoUrl = photoUrl;
     }
     
     //les getters and setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getNom() {
         return nom;
     }
@@ -75,12 +82,12 @@ public class Stagiaire {
         this.dateNaissance = dateNaissance;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = (photoUrl != null && !photoUrl.isEmpty()) ? photoUrl : "uploads/stagiaire.png";
     }
 
     public List<FormationStagiaire> getInscriptions() {

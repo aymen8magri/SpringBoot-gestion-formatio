@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Entreprise {
     @Id
@@ -12,11 +14,11 @@ public class Entreprise {
     private String nom;
     private String email;
     private String telephone;
-    @Lob
-    private byte[] logo;
+    private String logoUrl = "uploads/entreprise.png";
 
     //relation entre entreprise et formation
-    @OneToMany(mappedBy = "entreprise")
+    @JsonIgnore
+    @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL)
     private List<Formation> formations;
 
     //relation entre entreprise et adresse
@@ -27,16 +29,21 @@ public class Entreprise {
     public Entreprise() {
     }
 
-    public Entreprise(String nom, String email, String telephone, byte[] logo, Adresse adresse) {
+    public Entreprise(String nom, String email, String telephone, String logoUrl, Adresse adresse) {
         this.nom = nom;
         this.email = email;
         this.telephone = telephone;
-        this.logo = logo;
+        this.logoUrl = logoUrl;
         this.adresse = adresse;
     }
 
     //getters and setters
-
+public Long getId() {
+    return id;
+}
+public void setId(Long id) {
+    this.id = id;
+}
     public String getNom() {
         return nom;
     }
@@ -61,12 +68,12 @@ public class Entreprise {
         this.telephone = telephone;
     }
 
-    public byte[] getLogo() {
-        return logo;
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
-    public void setLogo(byte[] logo) {
-        this.logo = logo;
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = (logoUrl == null || logoUrl.isEmpty()) ? "uploads/entreprise.png" : logoUrl;
     }
 
     public List<Formation> getFormations() {

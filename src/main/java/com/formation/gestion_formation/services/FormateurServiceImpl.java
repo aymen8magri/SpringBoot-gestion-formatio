@@ -1,9 +1,13 @@
 package com.formation.gestion_formation.services;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.formation.gestion_formation.entities.Formateur;
 import com.formation.gestion_formation.repositories.FormateurRepository;
@@ -15,24 +19,62 @@ public class FormateurServiceImpl implements IFormateurService {
 
     // Ajout d'un formateur dans la base de données
     @Override
-    public Formateur ajouterFormateur(Formateur formateur) {
+    public Formateur ajouterFormateur(Formateur formateur, MultipartFile file) {
+        if (file != null && !file.isEmpty()) {
+            try {
+                String folder = "uploads/";
+                String fileName = file.getOriginalFilename();
+                Path path = Paths.get(folder + fileName);
+            Files.write(path, file.getBytes());
+                formateur.setPhotoUrl(folder + fileName);
+            } catch (Exception e) {
+                throw new RuntimeException("Erreur lors de l'upload du fichier");
+            }
+        }
         return formateurRepository.save(formateur);
     }
 
     // Modification d'un formateur dans la base de données
     @Override
-    public Formateur modifierFormateur(Long id, Formateur formateur) {
-        return formateurRepository.findById(id).map(existingFormateur -> {
-            existingFormateur.setNom(formateur.getNom());
-            existingFormateur.setPrenom(formateur.getPrenom());
-            existingFormateur.setEmail(formateur.getEmail());
-            existingFormateur.setTelephone(formateur.getTelephone());
-            existingFormateur.setPhoto(formateur.getPhoto());
-            existingFormateur.setSpecialite(formateur.getSpecialite());
-            existingFormateur.setExperience(formateur.getExperience());
-            existingFormateur.setFormations(formateur.getFormations());
-            return formateurRepository.save(existingFormateur);
-        }).orElseThrow(() -> new RuntimeException("Formateur avec ID " + id + " non trouvé"));
+    public Formateur modifierFormateur(Long id, Formateur formateur, MultipartFile file) {
+        return formateurRepository.findById(id)
+                .map(formateurExistant -> {
+                    if (formateur != null) {
+                        if(formateur.getNom() != null) {
+                            formateurExistant.setNom(formateur.getNom());
+                        }
+                        if(formateur.getPrenom() != null) {
+                            formateurExistant.setPrenom(formateur.getPrenom());
+                        }
+                        if(formateur.getEmail() != null) {
+                            formateurExistant.setEmail(formateur.getEmail());
+                        }
+                        if(formateur.getTelephone() != null) {
+                            formateurExistant.setTelephone(formateur.getTelephone());
+                        }
+                        if(formateur.getSpecialite() != null) {
+                            formateurExistant.setSpecialite(formateur.getSpecialite());
+                        }
+                        if(formateur.getExperience() != 0) {
+                            formateurExistant.setExperience(formateur.getExperience());
+                        }
+                    }
+
+                    if (file != null && !file.isEmpty()) {
+                        try {
+                            String folder = "uploads/";
+                            String fileName = file.getOriginalFilename();
+                            Path path = Paths.get(folder + fileName);
+                            Files.write(path, file.getBytes());
+
+                            formateurExistant.setPhotoUrl(folder + fileName);
+                        } catch (Exception e) {
+                            throw new RuntimeException("Erreur lors de l'upload du fichier");
+                        }
+                    }
+                    return formateurRepository.save(formateurExistant);
+                })
+                .orElseThrow(() -> new RuntimeException("Formateur non trouvé"));
     }
 
     // Suppression d'un formateur dans la base de données

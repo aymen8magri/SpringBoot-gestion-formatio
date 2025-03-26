@@ -4,12 +4,14 @@ import com.formation.gestion_formation.entities.Formation;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface IFormationService {
     // Ajout des formations dans la base de données
-    Formation ajouterFormation(Formation formation);
+    Formation ajouterFormation(Formation formation, MultipartFile file);
 
     // Modification des formations dans la base de données
-    Formation modifierFormation(Long id, Formation formation);
+    Formation modifierFormation(Long id, Formation formation, MultipartFile file);
 
     // Suppression des formations dans la base de données
     void supprimerFormation(Long id);

@@ -4,12 +4,14 @@ import com.formation.gestion_formation.entities.Stagiaire;
 
 import java.util.List;
 
-public interface StagiaireService {
+import org.springframework.web.multipart.MultipartFile;
+
+public interface IStagiaireService {
     // Ajout des stagiaires dans la base de données
-    Stagiaire ajouterStagiaire(Stagiaire stagiaire);
+    Stagiaire ajouterStagiaire(Stagiaire stagiaire, MultipartFile file);
 
     // Modification des stagiaires dans la base de données
-    Stagiaire modifierStagiaire(Long id, Stagiaire stagiaire);
+    Stagiaire modifierStagiaire(Long id, Stagiaire stagiaire, MultipartFile file);
 
     // Suppression des stagiaires dans la base de données
     void supprimerStagiaire(Long id);

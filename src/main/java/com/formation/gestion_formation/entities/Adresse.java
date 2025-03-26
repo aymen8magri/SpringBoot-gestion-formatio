@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Adresse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String rue;
     private String ville;
     private String codePostal;
@@ -28,6 +28,13 @@ public class Adresse {
 
     //getters and setters
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getRue() {
         return rue;
     }
