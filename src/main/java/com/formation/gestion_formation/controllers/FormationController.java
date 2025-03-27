@@ -100,4 +100,16 @@ public class FormationController {
     public List<Formation> listerFormations() {
         return formationService.listerFormations();
     }
+
+    //Lister les formations par formateur
+    @GetMapping("/formations/formateur/{id}")
+    public List<Formation> listerFormationsParFormateur(@PathVariable Long id) {
+        return formationService.listerFormationsParFormateur(id);
+    }
+
+    //Lister les formations par entreprise
+    @GetMapping("/formations/entreprise/{id}")
+    public List<Formation> listerFormationsParEntreprise(@PathVariable Long id) {
+        return formationService.listerFormationsParEntreprise(id);
+    }
 }

@@ -21,4 +21,10 @@ public interface IFormationService {
 
     // Liste des formations dans la base de données
     List<Formation> listerFormations();
+
+    // Liste des formations par formateur
+    List<Formation> listerFormationsParFormateur(Long id);
+
+    // Liste des formations par entreprise
+    List<Formation> listerFormationsParEntreprise(Long id);
 }

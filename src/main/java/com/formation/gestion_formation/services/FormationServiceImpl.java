@@ -55,6 +55,9 @@ public class FormationServiceImpl implements IFormationService {
                         if(formation.getPrix() != 0) {
                             formationExistant.setPrix(formation.getPrix());
                         }
+                        if (formation.getPlanning() != null && !formation.getPlanning().isEmpty()) {
+                            formationExistant.setPlanning(formation.getPlanning()); // ✅ Mise à jour du planning
+                        }
                     }
 
                     if (file != null && !file.isEmpty()) {
@@ -88,5 +91,17 @@ public class FormationServiceImpl implements IFormationService {
     @Override
     public List<Formation> listerFormations() {
         return formationRepository.findAll();
+    }
+
+    // Liste des formations par formateur
+    @Override
+    public List<Formation> listerFormationsParFormateur(Long id) {
+        return formationRepository.findByFormateurId(id);
+    }
+
+    // Liste des formations par entreprise
+    @Override
+    public List<Formation> listerFormationsParEntreprise(Long id) {
+        return formationRepository.findByEntrepriseId(id);
     }
 }

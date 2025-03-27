@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 public class Formation {
@@ -19,6 +22,8 @@ public class Formation {
     private int nbrePlace;
     private int duree;
     private double prix;
+    @Lob
+    private String planning; // Stocke du JSON par exemple
     private String imageUrl = "uploads/formation.png";
 
     //relation entre formation et formateur
@@ -41,7 +46,7 @@ public class Formation {
     public Formation() {
     }
 
-    public Formation(String titre, String description, LocalDate dateDebut, LocalDate dateFin,int nbrePlace, int duree, double prix, String imageUrl, Formateur formateur, Entreprise entreprise) {
+    public Formation(String titre, String description, LocalDate dateDebut, LocalDate dateFin,int nbrePlace, int duree, double prix, List<String> planningList, String imageUrl, Formateur formateur, Entreprise entreprise) {
         this.titre = titre;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -49,6 +54,7 @@ public class Formation {
         this.nbrePlace = nbrePlace;
         this.duree = duree;
         this.prix = prix;
+        this.setPlanning(planningList); 
         this.imageUrl = imageUrl;
         this.formateur = formateur;
         this.entreprise = entreprise;
@@ -68,6 +74,24 @@ public class Formation {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public void setPlanning(List<String> planningList) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            this.planning = objectMapper.writeValueAsString(planningList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Erreur lors de la conversion du planning en JSON");
+        }
+    }
+
+    public List<String> getPlanning() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(this.planning, new TypeReference<List<String>>() {});
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de la conversion du JSON en planning");
+        }
     }
 
     public LocalDate getDateDebut() {
