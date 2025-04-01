@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Entity
 public class Stagiaire {
     @Id
@@ -13,35 +12,45 @@ public class Stagiaire {
     private Long id;
     private String nom;
     private String prenom;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    private String password;
+
+    private String role = "STAGIAIRE"; // Role par défaut
+
     private String telephone;
     private LocalDate dateNaissance;
     private String photoUrl = "uploads/stagiaire.png";
 
-
-    //relation entre stagiaires et formationStagiaire
+    // relation entre stagiaires et formationStagiaire
     @OneToMany(mappedBy = "stagiaire", cascade = CascadeType.REMOVE)
     private List<FormationStagiaire> inscriptions;
 
     public Stagiaire() {
     }
 
-    public Stagiaire(String nom, String prenom, String email, String telephone, LocalDate dateNaissance, String photoUrl) {
+    public Stagiaire(String nom, String prenom, String email, String password, String telephone,
+            LocalDate dateNaissance, String photoUrl) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+        this.password = password;
         this.telephone = telephone;
         this.dateNaissance = dateNaissance;
         this.photoUrl = photoUrl;
     }
-    
-    //les getters and setters
+
+    // les getters and setters
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getNom() {
         return nom;
     }
@@ -64,6 +73,18 @@ public class Stagiaire {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getTelephone() {

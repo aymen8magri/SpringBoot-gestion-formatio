@@ -3,6 +3,7 @@ package com.formation.gestion_formation.services;
 import com.formation.gestion_formation.entities.Stagiaire;
 import com.formation.gestion_formation.repositories.StagiaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.*;
@@ -12,7 +13,8 @@ import java.util.List;
 public class StagiaireServiceImpl implements IStagiaireService {
     @Autowired
     private StagiaireRepository stagiaireRepository;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     // Ajout des stagiaires dans la base de données
     @Override
     public Stagiaire ajouterStagiaire(Stagiaire stagiaire, MultipartFile file) {
@@ -28,6 +30,10 @@ public class StagiaireServiceImpl implements IStagiaireService {
             throw new RuntimeException("Erreur lors de l'upload du fichier");
         }
     }
+     // Encoder le mot de passe avant d'enregistrer
+     String encodedPassword = passwordEncoder.encode(stagiaire.getPassword());
+     stagiaire.setPassword(encodedPassword);
+
     return stagiaireRepository.save(stagiaire);
 }
 

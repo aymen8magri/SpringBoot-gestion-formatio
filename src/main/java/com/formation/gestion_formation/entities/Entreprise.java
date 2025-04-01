@@ -12,7 +12,14 @@ public class Entreprise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nom;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    private String password;
+
+    private String role = "ENTREPRISE"; // Role par défaut
+
     private String telephone;
     private String logoUrl = "uploads/entreprise.png";
 
@@ -29,9 +36,10 @@ public class Entreprise {
     public Entreprise() {
     }
 
-    public Entreprise(String nom, String email, String telephone, String logoUrl, Adresse adresse) {
+    public Entreprise(String nom, String email, String password , String telephone, String logoUrl, Adresse adresse) {
         this.nom = nom;
         this.email = email;
+        this.password = password;
         this.telephone = telephone;
         this.logoUrl = logoUrl;
         this.adresse = adresse;
@@ -58,6 +66,22 @@ public void setId(Long id) {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getTelephone() {

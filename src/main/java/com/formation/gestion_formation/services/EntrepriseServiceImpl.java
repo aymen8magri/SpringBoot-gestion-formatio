@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,8 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
     private EntrepriseRepository entrepriseRepository;
     @Autowired
     private AdresseRepository adresseRepository;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public Entreprise ajouterEntreprise(Entreprise entreprise, MultipartFile file) {
         if (entreprise.getAdresse() != null) {
             // Sauvegarde d'abord l'adresse
@@ -40,6 +42,9 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
                 throw new RuntimeException("Erreur lors de l'upload du fichier");
             }
         }
+        // Encoder le mot de passe avant d'enregistrer
+    String encodedPassword = passwordEncoder.encode(entreprise.getPassword());
+    entreprise.setPassword(encodedPassword);
         return entrepriseRepository.save(entreprise);
     }
 

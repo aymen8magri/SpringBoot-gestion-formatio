@@ -1,9 +1,11 @@
 package com.formation.gestion_formation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.formation.gestion_formation.entities.Adresse;
 import com.formation.gestion_formation.entities.Entreprise;
@@ -24,12 +26,14 @@ import java.util.List;
 
 @SpringBootApplication
 public class GestionFormationApplication {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(GestionFormationApplication.class, args);
     }
 
-    @Bean
+   /*  @Bean
     CommandLineRunner run(AdresseRepository adresseRepository,
                           EntrepriseRepository entrepriseRepository,
                           FormateurRepository formateurRepository,
@@ -47,12 +51,12 @@ public class GestionFormationApplication {
             Adresse addr5 = new Adresse("34 Avenue de France", "Bizerte", "7000", "Tunisie");
             adresseRepository.saveAll(Arrays.asList(addr1, addr2, addr3,addr4, addr5));
 
-            // **Création d'Entreprises**
-            Entreprise ent1 = new Entreprise("TechCorp", "contact@techcorp.com", "71234567", "uploads/entreprise.png", addr1);
-            Entreprise ent2 = new Entreprise("EduServices", "info@eduservices.com", "71234568", "uploads/entreprise.png", addr2);
-            Entreprise ent3 = new Entreprise("InnovDev", "support@innovdev.com", "71234569", "uploads/entreprise.png", addr3);
-            Entreprise ent4 = new Entreprise("SoftTech", "contact@softtech.com", "71234580", "uploads/entreprise.png", addr4);
-            Entreprise ent5 = new Entreprise("DataSolutions", "info@datasolutions.com", "71234581", "uploads/entreprise.png", addr5);
+            // **Création d'Entreprises avec mot de passe encodé**
+            Entreprise ent1 = new Entreprise("TechCorp", "techcorp@gmail.com", passwordEncoder.encode("12345"), "71234567", "uploads/entreprise.png", addr1);
+            Entreprise ent2 = new Entreprise("EduServices", "eduservices@gmail.com", passwordEncoder.encode("12345"), "71234568", "uploads/entreprise.png", addr2);
+            Entreprise ent3 = new Entreprise("InnovDev", "innovdev@gmail.com", passwordEncoder.encode("12345"), "71234569", "uploads/entreprise.png", addr3);
+            Entreprise ent4 = new Entreprise("SoftTech", "softtech@gmail.com", passwordEncoder.encode("12345"), "71234580", "uploads/entreprise.png", addr4);
+            Entreprise ent5 = new Entreprise("DataSolutions", "datasolutions@gmail.com", passwordEncoder.encode("12345"), "71234581", "uploads/entreprise.png", addr5);
             entrepriseRepository.saveAll(Arrays.asList(ent1, ent2, ent3, ent4, ent5));
 
             // **Création des Formateurs**
@@ -176,11 +180,11 @@ public class GestionFormationApplication {
             formationRepository.saveAll(Arrays.asList(f1, f2, f3, f4,f5));
             
             // **Création des Stagiaires**
-            Stagiaire stag1 = new Stagiaire("Haddad", "Sarah", "sarah.haddad@gmail.com", "71234573", LocalDate.of(1995, 3, 15), "uploads/stagiaire.png");
-            Stagiaire stag2 = new Stagiaire("Mansour", "Omar", "omar.mansour@gmail.com", "71234574", LocalDate.of(1992, 7, 22), "uploads/stagiaire.png");
-            Stagiaire stag3 = new Stagiaire("Yahia", "Leila", "leila.yahia@gmail.com", "71234575", LocalDate.of(1998, 11, 5), "uploads/stagiaire.png");
-            Stagiaire stag4 = new Stagiaire("Gharbi", "Mohamed", "mohamed.gharbi@gmail.com", "71234584", LocalDate.of(1997, 4, 10), "uploads/stagiaire.png");
-            Stagiaire stag5 = new Stagiaire("Saidi", "Fatma", "fatma.saidi@gmail.com", "71234585", LocalDate.of(1994, 8, 25), "uploads/stagiaire.png");
+            Stagiaire stag1 = new Stagiaire("Haddad", "Sarah", "sarah.haddad@gmail.com", passwordEncoder.encode("12345"), "71234573", LocalDate.of(1995, 3, 15), "uploads/stagiaire.png");
+            Stagiaire stag2 = new Stagiaire("Mansour", "Omar", "omar.mansour@gmail.com",  passwordEncoder.encode("12345"),"71234574", LocalDate.of(1992, 7, 22), "uploads/stagiaire.png");
+            Stagiaire stag3 = new Stagiaire("Yahia", "Leila", "leila.yahia@gmail.com",  passwordEncoder.encode("12345"),"71234575", LocalDate.of(1998, 11, 5), "uploads/stagiaire.png");
+            Stagiaire stag4 = new Stagiaire("Gharbi", "Mohamed", "mohamed.gharbi@gmail.com", passwordEncoder.encode("12345"), "71234584", LocalDate.of(1997, 4, 10), "uploads/stagiaire.png");
+            Stagiaire stag5 = new Stagiaire("Saidi", "Fatma", "fatma.saidi@gmail.com",  passwordEncoder.encode("12345"),"71234585", LocalDate.of(1994, 8, 25), "uploads/stagiaire.png");
             stagiaireRepository.saveAll(Arrays.asList(stag1, stag2, stag3, stag4, stag5));
 
             // **Création des Inscriptions**
@@ -193,7 +197,7 @@ public class GestionFormationApplication {
 
             System.out.println("Insertion terminée !");
         };
-    }
+    }*/
 
     // @Bean
     // CommandLineRunner clearDatabase(AdresseRepository adresseRepository,
