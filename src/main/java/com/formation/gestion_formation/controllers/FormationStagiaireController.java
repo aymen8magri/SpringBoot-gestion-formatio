@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.formation.gestion_formation.entities.FormationStagiaire;
+import com.formation.gestion_formation.entities.Stagiaire;
 import com.formation.gestion_formation.services.IFormationStagiaireService;
 
 @RestController
@@ -49,4 +50,29 @@ public class FormationStagiaireController {
     public List<FormationStagiaire> listerInscriptions() {
         return formationStagiaireService.listerInscriptions();
     }
+
+    // ✅ Liste des stagiaires inscrits à une formation
+    @GetMapping("/stagiairesInscrits/{formationId}")
+    public List<Stagiaire> listerStagiairesInscrits(@PathVariable Long formationId) {
+        return formationStagiaireService.listerStagiairesInscrits(formationId);
+    }
+
+    // ✅ Liste des formations d’un stagiaire
+    @GetMapping("/formationsParStagiaire/{stagiaireId}")
+    public List<FormationStagiaire> listerFormationsStagiaire(@PathVariable Long stagiaireId) {
+        return formationStagiaireService.listerFormationsStagiaire(stagiaireId);
+    }
+
+    // ✅ Liste des inscriptions avec paiement effectué
+    @GetMapping("/paiementsEffectues/{formationId}")
+    public List<FormationStagiaire> listerPaiementsEffectues(@PathVariable Long formationId) {
+        return formationStagiaireService.listerPaiementsEffectues(formationId);
+    }
+
+    // ✅ Liste des inscriptions avec paiement non effectué
+    @GetMapping("/paiementsNonEffectues/{formationId}")
+    public List<FormationStagiaire> listerPaiementsNonEffectues(@PathVariable Long formationId) {
+        return formationStagiaireService.listerPaiementsNonEffectues(formationId);
+    }
+    
 }

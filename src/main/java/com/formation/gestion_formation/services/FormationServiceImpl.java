@@ -1,17 +1,26 @@
 package com.formation.gestion_formation.services;
 
+import com.formation.gestion_formation.entities.Formateur;
 import com.formation.gestion_formation.entities.Formation;
+import com.formation.gestion_formation.repositories.FormateurRepository;
 import com.formation.gestion_formation.repositories.FormationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FormationServiceImpl implements IFormationService {
     @Autowired
     private FormationRepository formationRepository;
+
+    @Autowired
+    private FormateurRepository formateurRepository;
 
     // Ajout des formations dans la base de données
     @Override
@@ -20,6 +29,9 @@ public class FormationServiceImpl implements IFormationService {
             try {
                 String folder = "uploads/";
                 String fileName = file.getOriginalFilename();
+                Path path = Paths.get(folder + fileName);
+                Files.write(path, file.getBytes());
+
                 formation.setImageUrl(folder + fileName);
             } catch (Exception e) {
                 throw new RuntimeException("Erreur lors de l'upload du fichier");
@@ -58,12 +70,19 @@ public class FormationServiceImpl implements IFormationService {
                         if (formation.getPlanning() != null && !formation.getPlanning().isEmpty()) {
                             formationExistant.setPlanning(formation.getPlanning()); // ✅ Mise à jour du planning
                         }
+                        // ✅ Mise à jour du formateur s'il est différent
+                        if (formation.getFormateur() != null && formation.getFormateur().getId() != null) {
+                            Optional<Formateur> formateurOpt = formateurRepository.findById(formation.getFormateur().getId());
+                            formateurOpt.ifPresent(formationExistant::setFormateur);
+                        }
                     }
 
                     if (file != null && !file.isEmpty()) {
                         try {
                             String folder = "uploads/";
                             String fileName = file.getOriginalFilename();
+                            Path path = Paths.get(folder + fileName);
+                            Files.write(path, file.getBytes());
                             formationExistant.setImageUrl(folder + fileName);
                         } catch (Exception e) {
                             throw new RuntimeException("Erreur lors de l'upload du fichier");

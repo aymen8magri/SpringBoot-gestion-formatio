@@ -21,7 +21,6 @@ public class FormationStagiaire {
     private Formation formation;
 
     //relation entre formationStragiaire et stagiaire
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "stagiaire_id")
     private Stagiaire stagiaire;

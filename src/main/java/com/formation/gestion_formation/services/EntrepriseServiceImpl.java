@@ -68,6 +68,10 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
                         if(entreprise.getEmail() != null) {
                             entrepriseExistant.setEmail(entreprise.getEmail());
                         }
+                        if(entreprise.getPassword() != null){
+                            String encodedPassword = passwordEncoder.encode(entreprise.getPassword());
+                            entrepriseExistant.setPassword(encodedPassword);
+                        }
                         if(entreprise.getTelephone() != null) {
                             entrepriseExistant.setTelephone(entreprise.getTelephone());
                         }

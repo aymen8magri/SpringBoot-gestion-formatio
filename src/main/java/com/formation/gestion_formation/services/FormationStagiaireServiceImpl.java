@@ -65,9 +65,33 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
                 .orElseThrow(() -> new RuntimeException("Inscription non trouvée avec ID : " + id));
     }
 
-    // Liste des inscriptions des stagiaires aux formations
+    // Liste des inscriptions aux formations
     @Override
     public List<FormationStagiaire> listerInscriptions() {
         return formationStagiaireRepository.findAll();
     }
+
+    // Liste des stagiaires inscrits à une formation
+    @Override
+    public List<Stagiaire> listerStagiairesInscrits(Long formationId) {
+        return formationStagiaireRepository.findStagiairesByFormationId(formationId);
+    }
+    // Liste des formations auxquelles un stagiaire est inscrit
+    @Override
+    public List<FormationStagiaire> listerFormationsStagiaire(Long stagiaireId) {
+        return formationStagiaireRepository.findByStagiaireId(stagiaireId);
+    }
+
+    // Liste des inscriptions inscrits à une formation avec paiement effectué
+    @Override
+    public List<FormationStagiaire> listerPaiementsEffectues(Long formationId) {
+        return formationStagiaireRepository.findStagiairesByFormationIdAndPaiementEffectue(formationId, true);
+    }
+
+    // Liste des inscriptions inscrits à une formation avec paiement non effectué
+    @Override
+    public List<FormationStagiaire> listerPaiementsNonEffectues(Long formationId) {
+        return formationStagiaireRepository.findStagiairesByFormationIdAndPaiementEffectue(formationId, false);
+    }
+    
 }

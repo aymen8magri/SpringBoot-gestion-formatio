@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Stagiaire {
     @Id
@@ -25,6 +27,7 @@ public class Stagiaire {
     private String photoUrl = "uploads/stagiaire.png";
 
     // relation entre stagiaires et formationStagiaire
+    @JsonIgnore
     @OneToMany(mappedBy = "stagiaire", cascade = CascadeType.REMOVE)
     private List<FormationStagiaire> inscriptions;
 
