@@ -4,6 +4,7 @@ import com.formation.gestion_formation.entities.FormationStagiaire;
 import com.formation.gestion_formation.entities.Stagiaire;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +23,13 @@ public interface FormationStagiaireRepository extends JpaRepository<FormationSta
 
     // Liste des inscriptions pour un stagiaire (formation + état de paiement)
     List<FormationStagiaire> findByStagiaireId(Long stagiaireId);
+
+    // verifier si le stagiaire est inscrit à une formation
+    Optional<FormationStagiaire> findByStagiaireIdAndFormationId(Long stagiaireId, Long formationId);
+
+    // get les formations inscrites par un stagiaire
+    @Query("SELECT fs FROM FormationStagiaire fs WHERE fs.stagiaire.id = :stagiaireId AND fs.paiementEffectue = :paiementEffectue")
+    List<FormationStagiaire> findByStagiaireIdAndPaiementEffectue(Long stagiaireId, boolean paiementEffectue);
+
 
 }

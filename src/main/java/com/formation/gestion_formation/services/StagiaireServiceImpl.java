@@ -58,6 +58,10 @@ public class StagiaireServiceImpl implements IStagiaireService {
                         if(stagiaire.getDateNaissance() != null) {
                             stagiaireExistant.setDateNaissance(stagiaire.getDateNaissance());
                         }
+                        if(stagiaire.getPassword() != null){
+                            String encodedPassword = passwordEncoder.encode(stagiaire.getPassword());
+                            stagiaireExistant.setPassword(encodedPassword);
+                        }
                     }
 
                     if (file != null && !file.isEmpty()) {

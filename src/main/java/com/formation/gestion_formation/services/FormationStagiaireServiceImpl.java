@@ -93,5 +93,23 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
     public List<FormationStagiaire> listerPaiementsNonEffectues(Long formationId) {
         return formationStagiaireRepository.findStagiairesByFormationIdAndPaiementEffectue(formationId, false);
     }
+
+    // verifier si un stagiaire est inscrit à une formation
+    @Override
+    public boolean estInscrit(Long stagiaireId, Long formationId) {
+        return formationStagiaireRepository.findByStagiaireIdAndFormationId(stagiaireId, formationId).isPresent();
+    }
+
+    // get les formations inscrites par un stagiaire
+    @Override
+    public List<FormationStagiaire> getFormationsInscritesByStagiaire(Long stagiaireId) {
+        return formationStagiaireRepository.findByStagiaireIdAndPaiementEffectue(stagiaireId, true);
+    }
+
+    // get les formations inscrites par un stagiaire avec paiement non effectué
+    @Override
+    public List<FormationStagiaire> getFormationsInscritesByStagiaireAndPaiementNonEffectue(Long stagiaireId) {
+        return formationStagiaireRepository.findByStagiaireIdAndPaiementEffectue(stagiaireId, false);
+    }
     
 }

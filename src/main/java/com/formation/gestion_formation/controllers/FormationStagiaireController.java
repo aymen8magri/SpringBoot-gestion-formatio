@@ -74,5 +74,22 @@ public class FormationStagiaireController {
     public List<FormationStagiaire> listerPaiementsNonEffectues(@PathVariable Long formationId) {
         return formationStagiaireService.listerPaiementsNonEffectues(formationId);
     }
-    
+
+    // ✅ Vérifier si un stagiaire est inscrit à une formation
+    @GetMapping("/estInscrit/{stagiaireId}/{formationId}")
+    public boolean estInscrit(@PathVariable Long stagiaireId, @PathVariable Long formationId) {
+        return formationStagiaireService.estInscrit(stagiaireId, formationId);
+    }
+
+    // get les formations inscrites par un stagiaire
+    @GetMapping("/formationsInscritesByStagiaire/{stagiaireId}")
+    public List<FormationStagiaire> getFormationsInscritesByStagiaire(@PathVariable Long stagiaireId) {
+        return formationStagiaireService.getFormationsInscritesByStagiaire(stagiaireId);
+    }
+
+    // get les formations inscrites par un stagiaire avec paiement non effectué
+    @GetMapping("/formationsInscritesByStagiaireAndPaiementNonEffectue/{stagiaireId}")
+    public List<FormationStagiaire> getFormationsInscritesByStagiaireAndPaiementNonEffectue(@PathVariable Long stagiaireId) {
+        return formationStagiaireService.getFormationsInscritesByStagiaireAndPaiementNonEffectue(stagiaireId);
+    }
 }

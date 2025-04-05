@@ -33,7 +33,14 @@ public interface IFormationStagiaireService {
     // Liste des inscriptions à une formation avec paiement non effectué
     List<FormationStagiaire> listerPaiementsNonEffectues(Long formationId);
 
-    
+    // verifier si un stagiaire est inscrit à une formation
+    boolean estInscrit(Long stagiaireId, Long formationId);
+
+    // get les formations inscrites par un stagiaire
+    List<FormationStagiaire> getFormationsInscritesByStagiaire(Long stagiaireId);
+
+    // get les formations inscrites par un stagiaire avec paiement non effectué
+    List<FormationStagiaire> getFormationsInscritesByStagiaireAndPaiementNonEffectue(Long stagiaireId);
 
     
 }
