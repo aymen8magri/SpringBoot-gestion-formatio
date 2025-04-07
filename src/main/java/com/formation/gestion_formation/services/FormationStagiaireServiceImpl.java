@@ -44,12 +44,25 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
     // Modification de l'inscription d'un stagiaire à une formation
     @Override
     public FormationStagiaire modifierInscription(Long id, boolean paiementEffectue) {
-        return formationStagiaireRepository.findById(id)
-                .map(inscription -> {
-                    inscription.setPaiementEffectue(paiementEffectue);
-                    return formationStagiaireRepository.save(inscription);
-                })
+        // Récupérer l'inscription
+        FormationStagiaire inscription = formationStagiaireRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inscription non trouvée avec ID : " + id));
+
+        // Si paiement effectué, mettre à jour le nombre de places disponibles
+        if (paiementEffectue) {
+            // Vérifier et mettre à jour le nombre de places
+            Formation formation = inscription.getFormation();
+            if (formation.getNbrePlace() > 0) {
+                formation.setNbrePlace(formation.getNbrePlace() - 1);
+                formationRepository.save(formation);
+            } else {
+                throw new RuntimeException("Aucune place disponible pour cette formation.");
+            }
+        }
+
+        // Mettre à jour le statut de paiement
+        inscription.setPaiementEffectue(paiementEffectue);
+        return formationStagiaireRepository.save(inscription);
     }
 
     // Suppression de l'inscription d'un stagiaire à une formation
@@ -76,6 +89,7 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
     public List<Stagiaire> listerStagiairesInscrits(Long formationId) {
         return formationStagiaireRepository.findStagiairesByFormationId(formationId);
     }
+
     // Liste des formations auxquelles un stagiaire est inscrit
     @Override
     public List<FormationStagiaire> listerFormationsStagiaire(Long stagiaireId) {
@@ -111,5 +125,5 @@ public class FormationStagiaireServiceImpl implements IFormationStagiaireService
     public List<FormationStagiaire> getFormationsInscritesByStagiaireAndPaiementNonEffectue(Long stagiaireId) {
         return formationStagiaireRepository.findByStagiaireIdAndPaiementEffectue(stagiaireId, false);
     }
-    
+
 }

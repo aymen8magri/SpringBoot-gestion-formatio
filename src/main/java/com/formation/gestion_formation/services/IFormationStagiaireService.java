@@ -15,16 +15,16 @@ public interface IFormationStagiaireService {
     // Suppression de l'inscription d'un stagiaire à une formation
     void supprimerInscription(Long id);
 
-    // Consultation de l'inscription d'un stagiaire à une    formation
+    // Consultation de l'inscription d'un stagiaire à une formation !!!!
     FormationStagiaire consulterInscription(Long id);
 
-    // get all
+    // get all                                                      !!!!
     List<FormationStagiaire> listerInscriptions();
 
-    // Liste des stagiaires inscrits à une formation
+    // Liste des stagiaires inscrits à une formation                 !!!!
     List<Stagiaire> listerStagiairesInscrits(Long formationId);
 
-    // Liste des formations auxquelles un stagiaire est inscrit
+    // Liste des formations auxquelles un stagiaire est inscrit         !!!!!
     List<FormationStagiaire> listerFormationsStagiaire(Long stagiaireId);
 
     // Liste des inscriptions à une formation avec paiement effectué
